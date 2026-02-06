@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg">
+        <div class="grid"></div>
+        <div class="orb one"></div>
+        <div class="orb two"></div>
+        <div class="orb three"></div>
+    </div>
+
+    <div class="page">
+        <div class="glass nav">
+            <div class="brand">
+                <div class="brand-mark"></div>
+                <div>AI Study Assistant</div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#how">How it works</a>
+                <a href="#features">Features</a>
+                <a href="#app">App</a>
+            </div>
+
+            <div class="nav-cta">
+                <button class="btn ghost" onclick="scrollToApp()">Open app</button>
+                <button class="btn primary" onclick="triggerUpload()">Upload PDF</button>
+            </div>
+        </div>
+
+        <div class="glass hero" id="how">
+            <div>
+                <div class="kicker">Local AI • Private • Fast</div>
+                <h1>Ask your PDFs like a pro.</h1>
+                <p class="subtitle">
+                    Upload notes, textbooks, or slides. We index them locally and answer questions with citations — powered by
+                    <span style="color:#93c5fd;font-weight:700;">Ollama</span> + <span style="color:#a78bfa;font-weight:700;">Chroma</span>.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn primary" onclick="triggerUpload()">Get started — upload a PDF</button>
+                    <button class="btn ghost" onclick="scrollToApp()">Ask a question</button>
+                </div>
+                <div class="mini">Everything runs on your machine. No account. No cloud.</div>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+                <svg class="rings" viewBox="0 0 820 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="g1" x1="110" y1="80" x2="720" y2="460" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#93c5fd" stop-opacity="0.95"/>
+                            <stop offset="0.5" stop-color="#6366f1" stop-opacity="0.75"/>
+                            <stop offset="1" stop-color="#a78bfa" stop-opacity="0.85"/>
+                        </linearGradient>
+                        <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="0.7"/>
+                        </filter>
+                    </defs>
+                    <g filter="url(#soft)" opacity="0.95">
+                        <path d="M520 80C620 130 700 230 640 330C580 430 420 450 320 400C220 350 160 240 210 150C260 60 420 30 520 80Z"
+                              stroke="url(#g1)" stroke-width="16" stroke-linecap="round"/>
+                        <path d="M610 150C690 220 690 320 600 380C510 440 380 430 290 360C200 290 190 180 280 120C370 60 530 80 610 150Z"
+                              stroke="url(#g1)" stroke-width="16" stroke-linecap="round" opacity="0.9"/>
+                        <path d="M540 210C590 250 580 310 520 345C460 380 380 370 330 325C280 280 295 210 360 180C425 150 490 170 540 210Z"
+                              stroke="url(#g1)" stroke-width="16" stroke-linecap="round" opacity="0.85"/>
+                    </g>
+                </svg>
+
+                <div class="floating-card">
+                    <strong>“What’s the difference between mitosis and meiosis?”</strong>
+                    <p>Ask natural questions — we pull the most relevant parts from your PDFs and answer with sources.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass stats" aria-label="Live stats">
+            <div class="stat">
+                <div class="num" id="statDocs">0</div>
+                <div class="label">Documents uploaded</div>
+            </div>
+            <div class="stat">
+                <div class="num" id="statChunks">0</div>
+                <div class="label">Chunks indexed</div>
+            </div>
+            <div class="stat">
+                <div class="num" id="statQuestions">0</div>
+                <div class="label">Questions asked</div>
+            </div>
+            <div class="stat">
+                <div class="num" id="statStatus">Ready</div>
+                <div class="label">System status</div>
+            </div>
+        </div>
+
+        <div class="features" id="features">
+            <div class="feature">
+                <div class="title">Smart retrieval</div>
+                <div class="desc">Finds the best-matching chunks before answering — so responses stay grounded in your material.</div>
+            </div>
+            <div class="feature">
+                <div class="title">Source citations</div>
+                <div class="desc">Every answer shows where it came from (document + chunk), so you can verify instantly.</div>
+            </div>
+            <div class="feature">
+                <div class="title">Local-first privacy</div>
+                <div class="desc">Runs on your PC with Ollama. Your PDFs stay on your machine.</div>
+            </div>
+        </div>
+
+        <div class="glass app" id="app">
+            <div class="section-title">
+                <h2>Study workspace</h2>
+                <div class="badge">Local · Ollama · Chroma</div>
+            </div>
+
+            <div class="layout">
+                <div>
+                    <div class="upload-section">
+                        <div class="sidebar-title">Upload study material</div>
+                        <p>Upload a PDF and I’ll index it for smart search.</p>
+                        <br>
+                        <input type="file" id="fileInput" class="file-input" accept=".pdf">
+                        <button class="upload-btn" onclick="triggerUpload()">
+                            Choose PDF File
+                        </button>
+                        <div id="status" class="status"></div>
+                        <div class="hint">Tip: upload lecture notes, textbooks, or slides for best results.</div>
+                    </div>
+
+                    <div class="sidebar-title">Documents this session</div>
+                    <div id="docList" class="doc-list empty">
+                        No documents yet. Upload a PDF to get started.
+                    </div>
+                    <button class="clear-btn" onclick="clearDatabase()">Clear all documents</button>
+                </div>
+
+                <div class="chat-section">
+                    <div class="sidebar-title">Ask questions</div>
+                    <div id="chatBox" class="chat-box"></div>
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="questionInput" 
+                            class="question-input" 
+                            placeholder="Ask anything from your uploaded PDFs..."
+                            onkeypress="handleKeyPress(event)"
+                        >
+                        <button class="ask-btn" onclick="askQuestion()" id="askBtn">Ask</button>
+                    </div>
+                    <div class="footer-hint">Press Enter to ask. Pro tip: include chapter/topic names for best results.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

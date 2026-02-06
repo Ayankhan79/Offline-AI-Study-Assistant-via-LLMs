@@ -1,0 +1,15 @@
+[project]
+name = "ai-study-assistant-backend"
+version = "0.1.0"
+description = "FastAPI AI backend"
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "python-multipart",
+    "PyPDF2",
+    "chromadb",
+    "sentence-transformers",
+    "requests"
+]
