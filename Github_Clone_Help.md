@@ -59,7 +59,7 @@ git clone https://github.com/username/repository-name.git
 Example:
 
 ```bash
-git clone https://github.com/ayxnk/House-Price-Prediction.git
+git clone https://github.com/Ayankhan79/Offline-AI-Study-Assistant-via-LLMs.git
 ```
 
 ---
